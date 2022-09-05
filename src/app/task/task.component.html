@@ -1,0 +1,92 @@
+
+<div id="main">
+    <div class="row">
+        <div class="col-md-3" id="create_task">
+            <input id="input1"
+                [(ngModel)]="taskToAdd.title"
+                type="text" 
+                placeholder="Enter your task" 
+                class="form-control">
+            <textarea id="input2"
+                [(ngModel)]="taskToAdd.description"
+                type="text"
+                class="form-control"
+                placeholder="Describe your task">
+            </textarea>
+            <button
+                class="btn btn-primary" 
+                type="submit"
+                (click)="onAddTask()">Add
+            </button>
+        </div>
+    </div>
+    
+    <hr>
+    <div class="wrapper-list">
+            <div class="list-group">
+                <div class="task-header todo">To Do <span id="countToDo">{{countToDo}}</span></div>
+                    <div *ngFor="let task of tasks">
+                        <div class="div1 todo" *ngIf="task.status === 'TODO'">
+                        <span id="title">{{task.title}}</span>
+                        <button type="button" class="btn btn-success" (click)="oNchangeStatusInProgressRight(task.id)">&#8594;</button>
+                        <button class="btn btn-danger" (click)="onDelete(task.id)">Delete</button>
+                        <span id="three-dots"></span>
+                        <br>
+                        <span id="description">{{task.description}}</span>
+                        <br>
+                        <span>
+                            <app-timer  [task]="task" [spaceId]="spaceId"></app-timer>
+                        </span>
+                        <br>
+                        <span id="dateCreated">Created: {{task.createdDate}} </span>
+                    </div>
+                </div>
+            </div>
+    
+    
+        <div class="list-group">
+            <div class="task-header inprogress">In Progress <span id="countInProgress">{{countInProgress}}</span></div>
+            <div  class="div1 inprogress" *ngFor="let task of tasks" [hidden]="task.status !== 'IN_PROGRESS'">
+                <div>
+                    <span id="title">{{task.title}}</span>
+                    <button class="btn btn-dark" (click)="onChangeStatusTODO(task.id)">&#8592;</button>
+                    <button class="btn btn-success" (click)="onChangeStatusDone(task.id)">&#8594;</button>
+                    <button class="btn btn-danger" (click)="onDelete(task.id)">Delete</button>
+                    <span id="three-dots"></span>
+                    <br>
+                    <span id="description">{{task.description}}</span>
+                    <br>
+                    <span>
+                        <app-timer  [task]="task" [spaceId]="spaceId"></app-timer>
+                    </span>
+                    <br>
+                    <span id="dateCreated">Created: {{task.createdDate}} </span>
+                </div>
+            </div>
+        </div>
+    
+        <div class="list-group">
+            <div class="task-header done">Done <span id="countDone">{{countDone}}</span></div>
+            <div class="div1 done" *ngFor="let task of tasks" [hidden]="task.status !== 'DONE'">
+                <div>
+                    <span id="title">{{task.title}}</span>
+                    <button type="button" class="btn btn-dark" (click)="oNchangeStatusInProgressLeft(task.id)">&#8592;</button>
+                    <button class="btn btn-danger" (click)="onDelete(task.id)">Delete</button>
+                    <span id="three-dots"></span>
+                    <br>
+                    <span id="description">{{task.description}}</span>
+                    <br>
+                    <span>
+                        <app-timer  [task]="task" [spaceId]="spaceId"></app-timer>
+                    </span>
+                    <br>
+                    <span id="dateFinished">Finished: {{task.finishedDate}}</span>
+                </div>
+            </div>
+        </div>
+        </div>
+
+</div>
+
+
+
